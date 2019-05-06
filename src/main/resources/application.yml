@@ -1,0 +1,19 @@
+spring:
+  jms:
+    listener:
+      acknowledge-mode: ${app.activemq.acknowledge-mode}
+      concurrency: ${app.activemq.conumer-min}
+      max-concurrency: ${app.activemq.conumer-max}
+    template:
+      delivery-mode: ${app.activemq.delivery-mod}
+      qos-enabled: ${app.activemq.qos-enabled}
+      default-destination: Default
+  activemq:
+    broker-url: ${app.activemq.broker-url}
+    user: ${app.activemq.user}
+    password: ${app.activemq.password}
+    in-memory: ${app.activemq.is-inmemory}
+    packages:
+      trust-all: ${app.activemq.packages.trust-all}
+    pool:
+      enabled: ${app.activemq.pool.enabled}

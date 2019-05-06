@@ -1,0 +1,18 @@
+app:
+  project-dir: /home/shamil/projects/EducationInvolerProjects/
+  activemq:
+    acknowledge-mode: auto #client, dups_ok
+    conumer-min: 1
+    conumer-max: 1
+    delivery-mod: non_persistent
+    is-inmemory: false
+    qos-enabled: false
+    broker-url: tcp://localhost:61616
+    user: invoker
+    password: invoker
+    queue:
+      invoker: HandlerInvoker
+    packages:
+          trust-all: true
+    pool:
+      enabled: false

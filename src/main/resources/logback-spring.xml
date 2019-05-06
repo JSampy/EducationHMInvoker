@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds">
+
+    <appender name="DAILY_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/invoker.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/arch/invoker.%d{yyyy-MM-dd}.%i.log.gz</FileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%date{yyyy-MM-dd'T'HH:mm:ss.SSS}[%level][%marker][%mdc{clientIp}][%mdc{uuid}][%logger{30}]: %msg%n%.-1500rEx</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+        ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%date{HH:mm:ss.SSS} [%highlight(%-5level)]%gray([%-3marker][%mdc{uuid}])[%green(%logger{30})]: %msg%n%rEx</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- Конфигурация для dev-контура -->
+    <springProfile name="dev">
+        <logger name="ru.jsam.education" level="TRACE"/>
+        <logger name="org.springframework.ws.client.MessageTracing" level="TRACE"/>
+        <logger name="sun.net.www.protocol.http.HttpURLConnection" level="ALL" />
+        <logger name="org.apache.http.impl.conn" level="ALL" />
+        <logger name="org.apache.http.client" level="ALL" />
+        <!--<logger name="org.springframework" level="ALL" />-->
+
+        <root level="INFO">
+            <appender-ref ref="DAILY_FILE"/>
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <logger name="ru.jsam.education" level="TRACE"/>
+        <root level="INFO">
+            <appender-ref ref="DAILY_FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="ru.jsam.education" level="TRACE"/>
+        <root level="INFO">
+            <appender-ref ref="DAILY_FILE"/>
+        </root>
+    </springProfile>
+</configuration>
